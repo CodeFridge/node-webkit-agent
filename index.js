@@ -161,16 +161,21 @@ var DevToolsAgent = module.exports = function() {
      * @api public
      **/
     this.stop = function() {
+        var pid = 0
+        if (this.proxy) {
+          pid = this.proxy.pid
+        }
+
         console.log('webkit-devtools-agent: Terminating websockets service' +
-        ' with PID: ' + this.proxy.pid + '...');
+        ' with PID: ' + pid + '...');
 
         if (this.socket) {
             this.socket.close();
             this.socket = null;
         }
 
-        if (this.proxy && this.proxy.pid) {
-            process.kill(this.proxy.pid, 'SIGTERM');
+        if (this.proxy && pid > 0) {
+            process.kill(pid, 'SIGTERM');
         }
 
         if (this.server) {
