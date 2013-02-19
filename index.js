@@ -166,8 +166,10 @@ var DevToolsAgent = module.exports = function() {
           pid = this.proxy.pid
         }
 
-        console.log('webkit-devtools-agent: Terminating websockets service' +
-        ' with PID: ' + pid + '...');
+        if (pid > 0) {
+          console.log('webkit-devtools-agent: Terminating websockets service' +
+          ' with PID: ' + pid + '...');
+        }
 
         if (this.socket) {
             this.socket.close();
